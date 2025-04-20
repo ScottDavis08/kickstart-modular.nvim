@@ -5,6 +5,7 @@
 
 -- Make line numbers default
 vim.opt.number = true
+vim.opt.relativenumber = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
 -- vim.opt.relativenumber = true
@@ -59,11 +60,26 @@ vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.scrolloff = 10
+vim.opt.scrolloff = 15
 
 -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
 -- instead raise a dialog asking if you wish to save the current file(s)
 -- See `:help 'confirm'`
 vim.opt.confirm = true
+
+-- Make Bash the default shell and allow to get out of it with Ctrl e.
+-- For now leaving the keymap here since they're related.
+vim.keymap.set('t', '<C-e>', '<C-\\><C-n>', { silent = true })
+vim.opt.shell = '"C:/Program Files/Git/bin/bash.exe"'
+vim.opt.shellcmdflag = '-c'
+vim.opt.shellquote = "'"
+vim.opt.shellxquote = ''
+
+vim.api.nvim_create_autocmd('BufEnter', {
+  pattern = '*',
+  callback = function()
+    vim.cmd 'cd %:p:h'
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et
